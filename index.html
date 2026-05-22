@@ -525,6 +525,41 @@
       color: var(--white);
     }
 
+    /* PUBLICATIONS */
+    .pub-list { display: flex; flex-direction: column; gap: 1.5rem; }
+    .pub-entry {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--teal);
+      border-radius: 8px;
+      padding: 1.5rem 1.75rem;
+    }
+    .pub-meta {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 0.5rem;
+    }
+    .pub-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.35rem;
+      font-style: italic;
+    }
+    .pub-authors {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+    .pub-abstract {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
     /* CONTACT */
     .contact-section {
       background: var(--surface);
@@ -647,6 +682,7 @@
     <ul class="nav-links">
       <li><a href="#projects">Projects</a></li>
       <li><a href="#experience">Experience</a></li>
+      <li><a href="#publications">Publications</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#contact-section">Contact</a></li>
     </ul>
@@ -928,6 +964,24 @@
           </div>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PUBLICATIONS -->
+  <section id="publications">
+    <div class="section-inner">
+      <div class="section-label">Research</div>
+      <h2 class="section-title">Publications</h2>
+      <div class="pub-list">
+        <div class="pub-entry">
+          <div class="pub-meta">Revista Ingeniería · N°100 · August 2024 · Asociación de Ingenieros del Uruguay</div>
+          <div class="pub-title">Monitoreo de la Resistencia del Hormigón con Tecnología IoT: Método de Madurez</div>
+          <div class="pub-authors">Serrano, V. &amp; Reina, M.</div>
+          <div class="pub-abstract">Peer-reviewed article documenting the implementation of the Concrete Maturity Method using IoT sensors on an active construction site in Uruguay. Covers system architecture, sensor calibration, thermal data processing, and real-time compressive strength estimation — validated against laboratory test results. Co-developed alongside the ANII national research grant ART_X_2024_1 in partnership with Universidad de la República (FING).</div>
+        </div>
       </div>
     </div>
   </section>
