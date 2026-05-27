@@ -442,6 +442,32 @@
       .contact-links { align-items: flex-start; }
       footer { flex-direction: column; gap: 0.5rem; text-align: center; }
     }
+    /* SNAKE BUTTON */
+    .snake-btn {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      z-index: 200;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.8rem;
+      border-radius: 2px;
+      background: rgba(13,15,16,0.8);
+      backdrop-filter: blur(8px);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .snake-btn:hover {
+      color: var(--teal);
+      border-color: var(--teal-dim);
+    }
   </style>
 </head>
 <body>
@@ -995,6 +1021,9 @@
       document.documentElement.lang = lang;
     }
   </script>
+
+  <!-- SNAKE EASTER EGG -->
+  <a href="/snake.html" class="snake-btn" title="take a break">▶ play snake</a>
 
 </body>
 </html>
