@@ -38,24 +38,6 @@
   #msg h2{font-size:1.05rem;color:var(--mustard);letter-spacing:.1em;}
   #msg p{font-size:.62rem;color:var(--muted);text-align:center;line-height:1.6;}
 
-  /* d-pad */
-  #dpad{
-    display:grid;
-    grid-template-areas:". u ." "l . r" ". d .";
-    grid-template-columns:1fr 1fr 1fr;
-    grid-template-rows:1fr 1fr 1fr;
-    gap:4px;width:114px;height:114px;flex-shrink:0;
-  }
-  .db{
-    background:var(--surface);border:1px solid var(--border);color:var(--teal);
-    font-size:.9rem;border-radius:4px;display:flex;align-items:center;
-    justify-content:center;cursor:pointer;user-select:none;
-    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
-    transition:background .1s;
-  }
-  .db:active{background:var(--teal-dim);}
-  #bu{grid-area:u}#bl{grid-area:l}#br{grid-area:r}#bd{grid-area:d}
-
   #back{
     font-size:.56rem;color:var(--muted);text-decoration:none;
     letter-spacing:.08em;flex-shrink:0;opacity:.4;transition:opacity .2s;
@@ -74,15 +56,8 @@
   <canvas id="c"></canvas>
   <div id="msg">
     <h2 id="mt">SNAKE</h2>
-    <p id="ms">SPACE · tap · d-pad to start</p>
+    <p id="ms">SPACE · tap to start</p>
   </div>
-</div>
-
-<div id="dpad">
-  <button class="db" id="bu">▲</button>
-  <button class="db" id="bl">◀</button>
-  <button class="db" id="br">▶</button>
-  <button class="db" id="bd">▼</button>
 </div>
 
 <a id="back" href="/">← portfolio</a>
@@ -105,10 +80,6 @@ const CC = {
   apple:'#d4a017', appleGlow:'#f5c842',
   ob:'#1d3530', obEdge:'#2dd4bf35',
 };
-
-// ── PATTERNS ──────────────────────────────────────────────────────────────────
-// Target fill: 25% = 100 cells out of 400 (20×20)
-// Each build() returns [{x,y}] — raw list, safety applied after
 
 // ── SCATTER ───────────────────────────────────────────────────────────────────
 function buildScatter(C, R) {
@@ -152,7 +123,6 @@ function buildScatter(C, R) {
 function safeObstacles(rawPts) {
   const cx = Math.floor(COLS / 2), cy = Math.floor(ROWS / 2);
   const SAFE = 3;
-
   const seen = new Set();
   let pts = rawPts.filter(p => {
     if (p.x < 0 || p.x >= COLS || p.y < 0 || p.y >= ROWS) return false;
@@ -161,7 +131,6 @@ function safeObstacles(rawPts) {
     seen.add(k); return true;
   }).filter(p => Math.abs(p.x - cx) > SAFE || Math.abs(p.y - cy) > SAFE);
 
-  // Connectivity flood-fill from centre
   const blocked = new Set(pts.map(p => `${p.x},${p.y}`));
   const visited = new Set();
   const q = [[cx, cy]];
@@ -173,11 +142,7 @@ function safeObstacles(rawPts) {
     q.push([x+1,y],[x-1,y],[x,y+1],[x,y-1]);
   }
   const totalFree = COLS * ROWS - pts.length;
-  // If less than 65% reachable, thin by removing 30% of obstacles randomly
-  if (visited.size < totalFree * 0.65) {
-    pts = pts.filter(() => Math.random() > 0.3);
-  }
-
+  if (visited.size < totalFree * 0.65) pts = pts.filter(() => Math.random() > 0.3);
   return pts;
 }
 
@@ -187,6 +152,10 @@ best = +localStorage.getItem('snakeBest') || 0;
 document.getElementById('best').textContent = best;
 
 function k(x, y) { return `${x},${y}`; }
+
+function tryDir(d) {
+  if (d.x !== -dir.x || d.y !== -dir.y) nextDir = d;
+}
 
 function freeCell(blocked) {
   let x, y, att = 0;
@@ -200,20 +169,17 @@ function freeCell(blocked) {
 
 function init() {
   obstacles = safeObstacles(buildScatter(COLS, ROWS));
-
   const mx = Math.floor(COLS / 2), my = Math.floor(ROWS / 2);
   snake   = [{x: mx, y: my}, {x: mx-1, y: my}, {x: mx-2, y: my}];
   dir     = {x: 1, y: 0};
   nextDir = {x: 1, y: 0};
   score   = 0;
   document.getElementById('score').textContent = 0;
-
   const blocked = new Set([
     ...snake.map(s => k(s.x, s.y)),
     ...obstacles.map(o => k(o.x, o.y))
   ]);
   apple = freeCell(blocked);
-
   state = 'running';
   document.getElementById('msg').style.display = 'none';
   clearInterval(ticker);
@@ -228,7 +194,6 @@ function tick() {
   };
   if (snake.some(s => s.x === head.x && s.y === head.y)) return die();
   if (obstacles.some(o => o.x === head.x && o.y === head.y)) return die();
-
   const ate = head.x === apple.x && head.y === apple.y;
   snake.unshift(head);
   if (!ate) {
@@ -274,38 +239,29 @@ function drawGrid() {
 }
 
 function drawObstacles() {
-  // Draw all obstacles; add subtle glow on edges
   ctx.fillStyle = CC.ob;
-  for (const o of obstacles) {
-    ctx.fillRect(o.x*CELL + 1, o.y*CELL + 1, CELL - 2, CELL - 2);
-  }
+  for (const o of obstacles) ctx.fillRect(o.x*CELL+1, o.y*CELL+1, CELL-2, CELL-2);
   ctx.strokeStyle = CC.obEdge;
   ctx.lineWidth = 1;
-  for (const o of obstacles) {
-    ctx.strokeRect(o.x*CELL + 1, o.y*CELL + 1, CELL - 2, CELL - 2);
-  }
+  for (const o of obstacles) ctx.strokeRect(o.x*CELL+1, o.y*CELL+1, CELL-2, CELL-2);
 }
 
 function drawApple() {
-  const cx = apple.x*CELL + CELL/2, cy = apple.y*CELL + CELL/2, r = CELL/2 - 2;
-  const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r + 4);
-  g.addColorStop(0, 'rgba(212,160,23,.55)');
-  g.addColorStop(1, 'rgba(212,160,23,0)');
-  ctx.fillStyle = g;
-  ctx.beginPath(); ctx.arc(cx, cy, r + 4, 0, Math.PI*2); ctx.fill();
-  ctx.fillStyle = CC.apple;
-  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.fill();
-  ctx.fillStyle = CC.appleGlow;
-  ctx.beginPath(); ctx.arc(cx - 1, cy - 1, r * 0.3, 0, Math.PI*2); ctx.fill();
+  const cx = apple.x*CELL+CELL/2, cy = apple.y*CELL+CELL/2, r = CELL/2-2;
+  const g = ctx.createRadialGradient(cx,cy,0,cx,cy,r+4);
+  g.addColorStop(0,'rgba(212,160,23,.55)'); g.addColorStop(1,'rgba(212,160,23,0)');
+  ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,r+4,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle=CC.apple; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle=CC.appleGlow; ctx.beginPath(); ctx.arc(cx-1,cy-1,r*.3,0,Math.PI*2); ctx.fill();
 }
 
 function drawSnake() {
-  snake.forEach((seg, i) => {
-    const alpha = 1 - (i / snake.length) * 0.55;
-    ctx.fillStyle = i === 0 ? CC.snakeHead : `rgba(45,212,191,${alpha})`;
-    const pad = i === 0 ? 1 : 2, r = i === 0 ? 5 : 3;
+  snake.forEach((seg,i) => {
+    const alpha = 1-(i/snake.length)*.55;
+    ctx.fillStyle = i===0 ? CC.snakeHead : `rgba(45,212,191,${alpha})`;
+    const pad=i===0?1:2, r=i===0?5:3;
     ctx.beginPath();
-    ctx.roundRect(seg.x*CELL + pad, seg.y*CELL + pad, CELL - pad*2, CELL - pad*2, r);
+    ctx.roundRect(seg.x*CELL+pad, seg.y*CELL+pad, CELL-pad*2, CELL-pad*2, r);
     ctx.fill();
   });
 }
@@ -319,16 +275,15 @@ function draw() { drawGrid(); drawObstacles(); drawApple(); drawSnake(); }
   const mx = Math.floor(COLS/2), my = Math.floor(ROWS/2);
   snake = [{x:mx,y:my},{x:mx-1,y:my},{x:mx-2,y:my}];
   dir = {x:1,y:0};
+  nextDir = {x:1,y:0};
   apple = {x: Math.min(mx+5, COLS-2), y: my};
   draw();
   document.getElementById('msg').style.display = 'flex';
   document.getElementById('mt').textContent = 'SNAKE';
-  document.getElementById('ms').textContent = 'SPACE · tap · d-pad to start';
+  document.getElementById('ms').textContent = 'SPACE · tap to start';
 })();
 
 // ── CONTROLS ──────────────────────────────────────────────────────────────────
-function tryDir(d) { if (d.x !== -dir.x || d.y !== -dir.y) nextDir = d; }
-
 document.addEventListener('keydown', e => {
   if (e.code === 'Space') { if (state !== 'running') init(); return; }
   const m = {
@@ -338,18 +293,6 @@ document.addEventListener('keydown', e => {
   };
   const dv = m[e.key] || m[e.key?.toLowerCase()];
   if (dv) { tryDir(dv); e.preventDefault(); }
-});
-
-const DMAP = {bu:{x:0,y:-1}, bd:{x:0,y:1}, bl:{x:-1,y:0}, br:{x:1,y:0}};
-Object.entries(DMAP).forEach(([id, dv]) => {
-  const btn = document.getElementById(id);
-  btn.addEventListener('touchstart', e => {
-    e.preventDefault();
-    if (state !== 'running') init(); else tryDir(dv);
-  }, {passive: false});
-  btn.addEventListener('click', () => {
-    if (state !== 'running') init(); else tryDir(dv);
-  });
 });
 
 canvas.addEventListener('click', () => { if (state !== 'running') init(); });
