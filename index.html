@@ -433,7 +433,8 @@
     /* RESPONSIVE */
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
-      .nav-links { gap: 1.2rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.65rem; }
       section { padding: 4rem 1.5rem; }
       .hero { padding: 7rem 1.5rem 3rem; }
       .hero-stats { display: none; }
@@ -447,10 +448,14 @@
 </head>
 <body>
 
-  <!-- NAV -->
+<!-- NAV -->
   <nav>
     <div class="nav-logo">VS · Portfolio</div>
     <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="btn-es" onclick="setLang('es')">ES</button>
+      </div>
       <ul class="nav-links">
         <li><a href="/snake.html">Snake</a></li>
         <li><a href="#projects" data-i18n="nav_projects">Projects</a></li>
@@ -459,10 +464,6 @@
         <li><a href="#about" data-i18n="nav_about">About</a></li>
         <li><a href="#contact-section" data-i18n="nav_contact">Contact</a></li>
       </ul>
-      <div class="lang-toggle">
-        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
-        <button class="lang-btn" id="btn-es" onclick="setLang('es')">ES</button>
-      </div>
     </div>
   </nav>
 
