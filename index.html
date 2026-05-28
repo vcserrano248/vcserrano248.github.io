@@ -69,12 +69,14 @@
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 2.5rem;
+      gap: 1.5rem;
+      flex-wrap: wrap;
     }
     .nav-links {
       display: flex;
       gap: 2.5rem;
       list-style: none;
+      flex-wrap: wrap;
     }
     .nav-links a {
       font-family: var(--mono);
@@ -432,9 +434,36 @@
 
     /* RESPONSIVE */
     @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { gap: 1rem; }
-      .nav-links a { font-size: 0.65rem; }
+      nav {
+        padding: 0.75rem 1.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+      .nav-logo { font-size: 0.7rem; }
+      .nav-right {
+        width: 100%;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .lang-toggle {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .nav-links {
+        width: 100%;
+        flex-direction: row;
+        gap: 0.5rem;
+        justify-content: flex-start;
+      }
+      .nav-links li {
+        display: inline-block;
+      }
+      .nav-links a {
+        font-size: 0.55rem;
+        letter-spacing: 0.08em;
+        white-space: nowrap;
+      }
       section { padding: 4rem 1.5rem; }
       .hero { padding: 7rem 1.5rem 3rem; }
       .hero-stats { display: none; }
@@ -742,7 +771,7 @@
           <div class="pub-meta">Revista Ingeniería · N°100 · August 2024 · Asociación de Ingenieros del Uruguay</div>
           <div class="pub-title">Monitoreo de la Resistencia del Hormigón con Tecnología IoT: Método de Madurez</div>
           <div class="pub-authors">Serrano, V. &amp; Reina, M. &nbsp;·&nbsp; <em data-i18n="pub_translation">Concrete Strength Monitoring Using IoT Technology: The Maturity Method</em></div>
-          <div class="pub-abstract" data-i18n="pub_abstract">Peer-reviewed article documenting the first full-scale implementation of the Concrete Maturity Method using IoT sensor systems on an active construction site in Uruguay. Covers system architecture, thermocouple calibration, thermal data processing, and real-time compressive strength estimation — validated against laboratory results. Co-developed alongsideANII national research grant ART_X_2024_1 in partnership with Universidad de la República, Facultad de Ingeniería (FING). pp. 32–40.</div>
+          <div class="pub-abstract" data-i18n="pub_abstract">Peer-reviewed article documenting the first full-scale implementation of the Concrete Maturity Method using IoT sensor systems on an active construction site in Uruguay. Covers system architecture, thermocouple calibration, thermal data processing, and real-time compressive strength estimation — validated against laboratory results. Co-developed alongside ANII national research grant ART_X_2024_1 in partnership with Universidad de la República, Facultad de Ingeniería (FING). pp. 32–40.</div>
         </div>
       </div>
     </div>
@@ -873,7 +902,7 @@
         exp1_h1: "Pearson correlation, IQR, CV analysis across 12 sensors over 16 months",
         exp1_h2: "Python pipeline: 261 automated graphs, 70 train passes, millimetric precision",
         exp1_h3: "Concrete Maturity Method — refactored legacy Python for live IoT dashboard",
-        exp1_h4: "Co-authored funded national R&D grant (ANII · ~USD 90K)",
+        exp1_h4: "Co-authored funded national R&D grant (ANNI · ~USD 90K)",
         exp2_title: "Project Engineer — Civil Infrastructure & Automation",
         exp2_desc: "Designed and implemented engineering data systems supporting civil infrastructure operations across Uruguay's Ferrocarril Central — the country's largest active infrastructure concession (273 km PPP railway).",
         exp2_h1: "200+ inspection reports automated across 200+ structures",
@@ -885,7 +914,7 @@
         pub_label: "Research",
         pub_title: "Publications",
         pub_translation: "Concrete Strength Monitoring Using IoT Technology: The Maturity Method",
-        pub_abstract: "Peer-reviewed article documenting the first full-scale implementation of the Concrete Maturity Method using IoT sensor systems on an active construction site in Uruguay. Covers system architecture, thermocouple calibration, thermal data processing, and real-time compressive strength estimation — validated against laboratory results. Co-developed alongside ANII national research grant ART_X_2024_1 in partnership with Universidad de la República, Facultad de Ingeniería (FING). pp. 32–40.",
+        pub_abstract: "Peer-reviewed article documenting the first full-scale implementation of the Concrete Maturity Method using IoT sensor systems on an active construction site in Uruguay. Covers system architecture, thermocouple calibration, thermal data processing, and real-time compressive strength estimation — validated against laboratory results. Co-developed alongside ANNI national research grant ART_X_2024_1 in partnership with Universidad de la República, Facultad de Ingeniería (FING). pp. 32–40.",
         about_label: "Background",
         about_title: "About Me",
         about_p1: "I'm a <strong>Civil Engineer who builds the analytical tools that make engineering decisions clearer</strong> — bringing domain knowledge to understand what infrastructure data means, and the technical toolkit to process, model, and communicate it.",
@@ -936,7 +965,7 @@
         proj3_desc: "Pipeline integral de inspección de infraestructura civil para el Ferrocarril Central de Uruguay — concesión PPP de 273km. Integración de Power Apps, SharePoint/Azure REST API, VBA/Word y PowerShell para captura de datos en campo, clasificación de fotos y generación de informes.",
         proj4_title: "Subsidio Nacional de I+D — Método de Madurez del Hormigón",
         proj4_desc: "Coautora de un subsidio nacional de innovación aprobado con la Universidad de la República (FING). Desarrollé el Estado del Arte técnico sobre el Método de Madurez y un agente GPT personalizado para síntesis de investigación. Designada Co-responsable Técnico-Científico.",
-        proj4_result: "Adjudicado y financiado · ANII ART_X_2024_1 · Alcance 12 meses",
+        proj4_result: "Adjudicado y financiado · ANNI ART_X_2024_1 · Alcance 12 meses",
         proj5_title: "Pipeline de Análisis de Desplazamiento en Bóvedas",
         proj5_desc: "Pipeline de datos integral para monitoreo de desplazamiento estructural a largo plazo en bóvedas de mampostería patrimonial. Limpieza en tres fases (filtro geométrico → criterio de Chauvenet → IQR iterativo), correlación ambiental de Pearson y análisis estadístico por sensor en 12 sensores y más de 40.000 observaciones.",
         proj5_result: "Comportamiento elástico confirmado · Temperatura r = 0.7–0.9 · Umbrales de alerta definidos",
@@ -953,7 +982,7 @@
         exp1_h1: "Correlación de Pearson, IQR, análisis de CV en 12 sensores durante 16 meses",
         exp1_h2: "Pipeline Python: 261 gráficos automatizados, 70 pasadas de tren, precisión milimétrica",
         exp1_h3: "Método de Madurez del Hormigón — refactorización de código Python legacy para dashboard IoT en vivo",
-        exp1_h4: "Coautora de subsidio nacional de I+D aprobado (ANII · ~USD 90K)",
+        exp1_h4: "Coautora de subsidio nacional de I+D aprobado (ANNI · ~USD 90K)",
         exp2_title: "Ingeniera de Proyecto — Infraestructura Civil y Automatización",
         exp2_desc: "Diseñé e implementé sistemas de datos de ingeniería para operaciones de infraestructura civil en el Ferrocarril Central de Uruguay — la concesión de infraestructura activa más grande del país (PPP 273 km).",
         exp2_h1: "Más de 200 informes de inspección automatizados en más de 200 estructuras",
@@ -965,7 +994,7 @@
         pub_label: "Investigación",
         pub_title: "Publicaciones",
         pub_translation: "Concrete Strength Monitoring Using IoT Technology: The Maturity Method",
-        pub_abstract: "Artículo con revisión editorial que documenta la primera implementación a escala real del Método de Madurez del Hormigón mediante sistemas de sensores IoT en una obra activa en Uruguay. Abarca arquitectura del sistema, calibración de termocuplas, procesamiento de datos térmicos y estimación de resistencia a compresión en tiempo real — validada contra resultados de laboratorio. Desarrollado en conjunto con el subsidio nacional de I+D ANII ART_X_2024_1 en colaboración con la Universidad de la República, Facultad de Ingeniería (FING). pp. 32–40.",
+        pub_abstract: "Artículo con revisión editorial que documenta la primera implementación a escala real del Método de Madurez del Hormigón mediante sistemas de sensores IoT en una obra activa en Uruguay. Abarca arquitectura del sistema, calibración de termocuplas, procesamiento de datos térmicos y estimación de resistencia a compresión en tiempo real — validada contra resultados de laboratorio. Desarrollado en conjunto con el subsidio nacional de I+D ANNI ART_X_2024_1 en colaboración con la Universidad de la República, Facultad de Ingeniería (FING). pp. 32–40.",
         about_label: "Perfil",
         about_title: "Sobre Mí",
         about_p1: "Soy una <strong>Ingeniera Civil que construye las herramientas analíticas que hacen más claras las decisiones de ingeniería</strong> — aportando conocimiento de dominio para entender qué significan los datos de infraestructura, y las herramientas técnicas para procesarlos, modelarlos y comunicarlos.",
